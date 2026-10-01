@@ -1,0 +1,62 @@
+{
+  "local_plan": {
+    "gate_4": "approved",
+    "slices": [
+      {
+        "id": "slice-1",
+        "implementation": "complete",
+        "review": "approved",
+        "commit": "recorded",
+        "test": {
+          "name": "FeatureTests",
+          "status": "passed"
+        }
+      },
+      {
+        "id": "slice-2",
+        "implementation": "pending",
+        "review": "not-reached",
+        "commit": "not-created",
+        "test": {
+          "name": "ResumeSlice",
+          "status": "not-run"
+        }
+      }
+    ],
+    "next_step": "slice-2"
+  },
+  "repository_state": {
+    "applied_slices": [
+      "slice-1"
+    ],
+    "first_incomplete_slice": "slice-2",
+    "workspace": "evals/fixtures/resume-workspace"
+  },
+  "jira_snapshot": {
+    "source": "local-fixture",
+    "issue_key": "DEMO-1",
+    "status": "In Progress",
+    "completed_slices": [
+      "slice-1"
+    ],
+    "next_slice": "slice-2",
+    "write_allowed": false
+  },
+  "slice_2_work": {
+    "target": "evals/fixtures/resume-workspace/export-settings.json",
+    "change": {
+      "property": "include_headers",
+      "from": false,
+      "to": true
+    },
+    "verification": {
+      "script": "evals/fixtures/resume-workspace/Test-ResumeSlice.ps1",
+      "config_argument": "evals/fixtures/resume-workspace/export-settings.json"
+    }
+  },
+  "safety": {
+    "network_allowed": false,
+    "real_jira_actions_allowed": false,
+    "redo_approved_gates": false
+  }
+}

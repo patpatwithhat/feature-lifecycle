@@ -1,0 +1,3 @@
+interface:
+  display_name: "Feature Lifecycle"
+  short_description: "From feature idea to optional Jira, code, tests, commits, and GitLab MR."

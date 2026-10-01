@@ -1,0 +1,90 @@
+schema_version: 1
+
+workflow:
+  mode_selection: always_ask
+  jira_creation_after: program_design
+
+  modes:
+    software_factory: true
+    vibe_coding: true
+    delivery_only: true
+
+  approvals:
+    product: required
+    architecture: required
+    program_design: required
+    slice_plan: required
+    vibe_plan: required
+
+plans:
+  directory: docs/plans
+  storage: local
+  exclude_method: git_info_exclude
+
+jira:
+  enabled: true
+
+  project:
+    strategy: context_or_ask
+    key: null
+
+  issue_type: Story
+  content_language: de
+
+  fields:
+    title: true
+    summary: true
+    description: true
+    acceptance_criteria: true
+    definition_of_done: true
+
+  assignee:
+    account_id: null
+
+  sprint:
+    placement: backlog
+
+  status:
+    on_create: "In Arbeit"
+    on_ready_for_testing: "Testen"
+
+git:
+  base_branch:
+    strategy: gitlab_default
+    name: null
+
+  update_strategy: ff_only
+  require_clean_worktree: true
+
+  branch:
+    pattern: "feature/{issue_key}-{slug}"
+    language: en
+
+  commit:
+    language: en
+    style: repository_or_conventional
+    strategy: per_slice
+
+gitlab:
+  target_branch:
+    strategy: base_branch
+    name: null
+
+  merge_request:
+    create: true
+    create_after: final_tests
+    title_language: en
+    remove_source_branch: repository_default
+    squash: repository_default
+
+tests:
+  discovery_order:
+    - agents
+    - repository_documentation
+    - repository_scripts
+    - gitlab_ci
+
+  commands:
+    build: []
+    test: []
+    final: []

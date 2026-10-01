@@ -1,0 +1,28 @@
+{
+  "config": {
+    "jira": {
+      "sprint": {
+        "placement": "active_sprint"
+      }
+    }
+  },
+  "mock_project": {
+    "key": "DEMO",
+    "boards": [
+      {
+        "id": 101,
+        "name": "Demo Board",
+        "active_sprints": [
+          { "id": 501, "name": "Sprint 7" }
+        ]
+      }
+    ]
+  },
+  "mock_issue": {
+    "key": "DEMO-1",
+    "sprint": { "id": 501, "name": "Sprint 7" }
+  },
+  "external_capabilities": {
+    "jira": "mock-only"
+  }
+}

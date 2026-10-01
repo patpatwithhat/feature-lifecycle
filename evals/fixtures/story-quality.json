@@ -1,0 +1,26 @@
+{
+  "feature": "CSV-Export der gefilterten Suchergebnisse",
+  "target_users": "Support-Mitarbeitende",
+  "outcome": "Die aktuell gefilterten Treffer werden nachvollziehbar als CSV-Datei exportiert.",
+  "scope": {
+    "included": [
+      "Export der sichtbaren Filtermenge",
+      "stabile Spaltenreihenfolge",
+      "verständliche Fehlermeldung bei Schreibfehlern"
+    ],
+    "excluded": [
+      "geplanter Hintergrundexport",
+      "weitere Dateiformate"
+    ]
+  },
+  "required_quality": [
+    "Erfolgsfall",
+    "leere Ergebnismenge",
+    "Sonderzeichen und Encoding",
+    "Schreibfehler",
+    "Wiederholung",
+    "Regressionstest"
+  ],
+  "story_created": false,
+  "approval": false
+}

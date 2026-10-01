@@ -1,0 +1,19 @@
+{
+  "project": "DEMO",
+  "mock_metadata": {
+    "issue_type": "Story",
+    "fields": {
+      "summary": { "editable": true },
+      "description": { "editable": true },
+      "acceptance_criteria": { "editable": false },
+      "definition_of_done": { "editable": false }
+    }
+  },
+  "mock_transitions": [
+    "To Do",
+    "In Progress"
+  ],
+  "external_capabilities": {
+    "jira": "blocked"
+  }
+}

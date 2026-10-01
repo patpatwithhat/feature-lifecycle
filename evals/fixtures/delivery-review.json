@@ -1,0 +1,22 @@
+{
+  "branch_diff": "diff --git a/src/Export/CsvExporter.cs b/src/Export/CsvExporter.cs\n+return CsvWriter.Write(filteredRows);\ndiff --git a/tests/Export/CsvExporterTests.cs b/tests/Export/CsvExporterTests.cs\n+Assert.Equal(2, exportedRows.Count);",
+  "tests": {
+    "status": "passed",
+    "evidence": "CsvExporterTests: 6 passed, 0 failed"
+  },
+  "definition_of_done": {
+    "status": "complete",
+    "proven": [
+      "implementation reviewed",
+      "focused tests passed",
+      "documentation updated"
+    ]
+  },
+  "merge_request": {
+    "title": "feat: export filtered results as csv",
+    "description": "Adds CSV export for the current filtered result set and verifies encoding and error handling.",
+    "planned": true,
+    "created": false
+  },
+  "pushed": false
+}

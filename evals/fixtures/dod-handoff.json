@@ -1,0 +1,20 @@
+{
+  "merge_request": {
+    "id": "!17",
+    "exists": true
+  },
+  "jira_mapping": {
+    "dod_field_editable": false,
+    "test_transition": "Ready for Test"
+  },
+  "definition_of_done": {
+    "proven": [
+      "tests_pass",
+      "reviewed"
+    ],
+    "remaining": [
+      "deployment"
+    ]
+  },
+  "transition_allowed": false
+}

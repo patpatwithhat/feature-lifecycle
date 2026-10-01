@@ -1,0 +1,13 @@
+{
+  "repository": {
+    "team_config_path": ".feature-workflow.yaml",
+    "team_config_present": false,
+    "local_config_path": ".feature-workflow.local.yaml",
+    "local_config_present": false
+  },
+  "external_capabilities": {
+    "jira": "unavailable",
+    "gitlab": "unavailable"
+  },
+  "approval_required": true
+}

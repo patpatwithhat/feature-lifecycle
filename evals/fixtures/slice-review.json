@@ -1,0 +1,17 @@
+{
+  "slice": {
+    "files": [
+      "src/Export/CsvExporter.cs",
+      "tests/Export/CsvExporterTests.cs"
+    ],
+    "summary": "Exportiert die gefilterte Treffermenge mit stabiler UTF-8-Kodierung.",
+    "diff": "diff --git a/src/Export/CsvExporter.cs b/src/Export/CsvExporter.cs\n+return CsvWriter.Write(filteredRows);\ndiff --git a/tests/Export/CsvExporterTests.cs b/tests/Export/CsvExporterTests.cs\n+Assert.Equal(2, exportedRows.Count);",
+    "tests": {
+      "command": "dotnet test --filter CsvExporterTests",
+      "status": "passed",
+      "evidence": "2 passed, 0 failed"
+    },
+    "committed": false
+  },
+  "delivery_only_commit_operation": true
+}

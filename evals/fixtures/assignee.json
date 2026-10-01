@@ -1,0 +1,15 @@
+{
+  "local_config": {
+    "path": ".feature-workflow.local.yaml",
+    "assignee": null
+  },
+  "mock_jira": {
+    "users": [
+      { "displayName": "Anna Beispiel", "accountId": "mock-account-1" },
+      { "displayName": "Anja Beispiel", "accountId": "mock-account-2" }
+    ]
+  },
+  "external_capabilities": {
+    "jira": "blocked"
+  }
+}
