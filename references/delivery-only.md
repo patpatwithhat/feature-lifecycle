@@ -1,6 +1,6 @@
 # Delivery Only Mode
 
-Perform only the Jira, branch, test, commit, push, or GitLab merge-request work the user requests. Do not introduce Product, Architecture, Program Design, or Vertical Slice gates.
+Perform only the Jira, branch, test, commit, push, or GitHub/GitLab change-request work the user requests. Do not introduce Product, Architecture, Program Design, or Vertical Slice gates.
 
 ## Scope discipline
 
@@ -49,7 +49,7 @@ Perform only the Jira, branch, test, commit, push, or GitLab merge-request work 
 
 1. Verify branch, commits, worktree, tests, target branch, and push state.
 2. Push without force.
-3. Create the GitLab merge request using repository template and [gitlab-delivery.md](gitlab-delivery.md).
+3. Create the provider's pull/merge request using the repository template and [gitlab-delivery.md](gitlab-delivery.md).
 4. Link the Jira Story when Jira is enabled and a Story exists.
 5. Report the URL and any unverified checks.
 

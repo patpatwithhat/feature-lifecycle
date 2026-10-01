@@ -49,8 +49,10 @@ jira:
     on_ready_for_testing: "Testen"
 
 git:
+  provider: auto
+
   base_branch:
-    strategy: gitlab_default
+    strategy: provider_default
     name: null
 
   update_strategy: ff_only
@@ -77,12 +79,25 @@ gitlab:
     remove_source_branch: repository_default
     squash: repository_default
 
+github:
+  target_branch:
+    strategy: base_branch
+    name: null
+
+  pull_request:
+    create: true
+    create_after: final_tests
+    title_language: en
+    delete_source_branch: repository_default
+    squash: repository_default
+
 tests:
   discovery_order:
     - agents
     - repository_documentation
     - repository_scripts
     - gitlab_ci
+    - github_actions
 
   commands:
     build: []

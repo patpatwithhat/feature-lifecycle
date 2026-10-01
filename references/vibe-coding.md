@@ -55,7 +55,7 @@ Do not implement before clear approval.
 After approval:
 
 1. When Jira is enabled, create the Jira Story using [jira-story.md](jira-story.md). Otherwise skip Jira.
-2. Create and check out the feature branch using [gitlab-delivery.md](gitlab-delivery.md), omitting the issue key when Jira is disabled.
+2. Detect the hosting provider and create and check out the feature branch using [gitlab-delivery.md](gitlab-delivery.md), omitting the issue key when Jira is disabled.
 3. Implement in small logical increments while following every relevant `AGENTS.md`.
 4. Run focused tests as soon as behavior becomes testable; do not wait until the end for all feedback.
 5. Keep `00-status.md` current with decisions, tests, and commits.
@@ -64,7 +64,7 @@ After approval:
 8. Show the complete branch diff, final test evidence, Definition-of-Done status, and planned merge-request content. Ask for explicit delivery approval.
 9. Only after delivery approval, push and create the merge request.
 10. When Jira is enabled, verify acceptance criteria and Definition of Done with evidence, mark only proven Jira checklist items complete, and transition the Story to the configured ready-for-testing status.
-11. When Jira is enabled, link Jira and GitLab when supported.
+11. When Jira is enabled, link Jira and the provider request when supported.
 
 ## Escalation rule
 

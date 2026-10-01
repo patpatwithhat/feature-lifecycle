@@ -33,7 +33,7 @@ A path must not be absolute and must not contain `..` traversal. Do not allow a 
 
 ## `jira`
 
-- `enabled`: boolean; default `true`. When `false`, Jira is not required for the workflow. Skip Jira setup questions, capability discovery, Story drafting and creation, Jira transitions, checklist updates, and Jira/GitLab linking.
+- `enabled`: boolean; default `true`. When `false`, Jira is not required for the workflow. Skip Jira setup questions, capability discovery, Story drafting and creation, Jira transitions, checklist updates, and Jira/provider linking.
 
 When Jira is disabled, all other `jira` values are ignored and may remain at their template defaults. A branch pattern containing `{issue_key}` must omit that placeholder and any adjacent separator when building the branch name.
 
@@ -70,9 +70,21 @@ For `active_sprint`, resolve the active sprint of the selected project. Proceed 
 
 ## `git`
 
+### `provider`
+
+- `auto` (default): detect the provider from Git remote URLs.
+- `github`: use GitHub explicitly.
+- `gitlab`: use GitLab explicitly.
+
+With `auto`, the host component of HTTPS and SSH remotes is inspected:
+`github.com` resolves to GitHub and `gitlab.com` resolves to GitLab. Ask when
+multiple remotes resolve to different providers or when the host is unknown.
+Use an explicit provider for enterprise or self-hosted hosts. An explicit
+provider always overrides automatic detection.
+
 ### `base_branch`
 
-- `strategy`: `gitlab_default`, `fixed`, or `repository_detected`.
+- `strategy`: `provider_default`, `gitlab_default` (legacy), `fixed`, or `repository_detected`.
 - `name`: required for `fixed`; otherwise may be `null`.
 
 ### Update and cleanliness
@@ -112,6 +124,21 @@ Feature patterns should contain both `{issue_key}` and `{slug}` unless repositor
 - `remove_source_branch`: boolean or `repository_default`.
 - `squash`: boolean or `repository_default`.
 
+## `github`
+
+### `target_branch`
+
+- `strategy`: `base_branch`, `github_default`, or `fixed`.
+- `name`: required for `fixed`; otherwise may be `null`.
+
+### `pull_request`
+
+- `create`: boolean.
+- `create_after`: `final_tests` or `manual`.
+- `title_language`: `repository`, `en`, or `de`.
+- `delete_source_branch`: boolean or `repository_default`.
+- `squash`: boolean or `repository_default`.
+
 ## `tests`
 
 ### `discovery_order`
@@ -122,6 +149,7 @@ List containing any of:
 - `repository_documentation`
 - `repository_scripts`
 - `gitlab_ci`
+- `github_actions`
 
 ### `commands`
 

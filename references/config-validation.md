@@ -28,6 +28,10 @@ Verify:
 - `jira.assignee.account_id`, when supplied and non-null, is a non-empty string.
 - `jira.sprint.placement`, when supplied, is `backlog` or `active_sprint`.
 - `jira.status.on_create` and `jira.status.on_ready_for_testing`, when supplied, are non-empty strings.
+- `git.provider`, when supplied, is `auto`, `github`, or `gitlab`.
+- `git.base_branch.strategy` is `provider_default`, legacy `gitlab_default`, `fixed`, or `repository_detected`.
+- `gitlab.target_branch.strategy`, when supplied, is `base_branch`, `gitlab_default`, or `fixed`.
+- `github.target_branch.strategy`, when supplied, is `base_branch`, `github_default`, or `fixed`.
 - `git.update_strategy` equals `ff_only`.
 - `git.branch.language` and `git.commit.language` equal `en`.
 - A fixed base or target branch has a non-empty name.
@@ -42,7 +46,7 @@ Verify:
 
 ## Repository checks
 
-When a local repository or GitLab metadata is available:
+When a local repository or hosting-provider metadata is available:
 
 - Confirm a fixed base branch exists.
 - Confirm the target branch is valid.
@@ -55,7 +59,7 @@ When a local repository or GitLab metadata is available:
 Reject values or keys that appear to contain:
 
 - Tokens, passwords, API keys, private keys, session cookies, or secret-bearing connection strings.
-- Jira or GitLab credentials.
+- Jira, GitHub, or GitLab credentials.
 - Personal access tokens.
 
 Names of environment variables are allowed; secret values are not.

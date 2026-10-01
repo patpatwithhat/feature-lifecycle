@@ -169,7 +169,7 @@ After Gate 3 is approved:
 
 1. When Jira is enabled, create the Jira Story according to [jira-story.md](jira-story.md) and record its key and link in `00-status.md`. When Jira is disabled, record Jira as not applicable.
 2. Build the final English branch name using the actual issue key when available; otherwise omit the issue-key placeholder.
-3. Prepare and check out the branch according to [gitlab-delivery.md](gitlab-delivery.md).
+3. Detect the hosting provider and prepare and check out the branch according to [gitlab-delivery.md](gitlab-delivery.md).
 5. Record the branch and base branch in `00-status.md`.
 6. Stop on any capability, permission, dirty-worktree, branch, or connector failure. Record the failure and do not continue to implementation.
 
@@ -225,8 +225,8 @@ After all slices:
 1. Run configured final tests and all checks required by `AGENTS.md` or CI conventions.
 2. Inspect the complete branch diff for unrelated changes, secrets, generated artifacts, and accidental local plan files.
 3. Show the complete branch diff, final test evidence, Definition-of-Done status, and planned merge-request content. Ask for explicit delivery approval.
-4. Only after delivery approval, push safely and create the GitLab merge request using [gitlab-delivery.md](gitlab-delivery.md).
-5. When Jira is enabled, link Jira and GitLab in both directions when the connectors support it, then complete the final Jira verification and handoff described in [jira-story.md](jira-story.md). Otherwise skip the Jira handoff.
+4. Only after delivery approval, push safely and create the provider pull/merge request using [gitlab-delivery.md](gitlab-delivery.md).
+5. When Jira is enabled, link Jira and the provider request in both directions when the connectors support it, then complete the final Jira verification and handoff described in [jira-story.md](jira-story.md). Otherwise skip the Jira handoff.
 6. Record the merge-request URL and final status in `00-status.md`.
 7. Report completed work, test evidence, commits, known limitations, and review focus.
 

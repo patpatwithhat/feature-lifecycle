@@ -1,27 +1,35 @@
-# Git and GitLab Delivery
+# Git and Hosting-Provider Delivery
 
-Use repository conventions first, then config, then safe defaults. Distinguish local Git operations from remote GitLab operations.
+Use repository conventions first, then config, then safe defaults. Distinguish local Git operations from remote GitHub or GitLab operations.
+
+## Detect the hosting provider
+
+1. Read all configured Git remote URLs.
+2. With `git.provider: auto`, inspect the host component of HTTPS and SSH URLs; map `github.com` to GitHub and `gitlab.com` to GitLab.
+3. Ask when remotes resolve to different providers or no provider can be resolved.
+4. A fixed `git.provider` overrides detection, but still verify that the selected provider can access the repository.
 
 ## Discover repository conventions
 
 Inspect:
 
 - Relevant `AGENTS.md` and contribution guidance.
-- GitLab default and protected branches.
+- Provider default and protected branches.
 - Repeated existing branch names.
 - Recent commit messages.
-- Merge-request templates and CI requirements.
+- Pull/merge-request templates and CI requirements.
 - Configured test commands and repository scripts.
 
 Do not infer a convention from one outlier.
 
 ## Resolve the base branch
 
-- `gitlab_default`: use the GitLab project's current default branch.
+- `provider_default`: use the detected provider's current default branch.
+- `gitlab_default`: use the GitLab project's current default branch (legacy configuration value).
 - `fixed`: use the configured branch after verifying it exists.
 - `repository_detected`: use a clearly documented repository development branch.
 
-If repository instructions and GitLab metadata disagree materially, stop and ask. Never guess between `main`, `develop`, and `development`.
+If repository instructions and provider metadata disagree materially, stop and ask. Never guess between `main`, `develop`, and `development`.
 
 ## Build the branch name
 
@@ -51,7 +59,7 @@ When a local repository is available:
 6. Create and check out the feature branch.
 7. Verify and report the current branch and base commit.
 
-When only a GitLab connector is available, a remote branch may be created if supported, but do not describe it as locally checked out. Local builds, tests, and commits remain unavailable unless another execution environment exists.
+When only a provider connector is available, a remote branch may be created if supported, but do not describe it as locally checked out. Local builds, tests, and commits remain unavailable unless another execution environment exists.
 
 ## Discover and run tests
 
@@ -60,7 +68,7 @@ Use the configured order:
 1. `AGENTS.md`.
 2. Repository documentation.
 3. Repository scripts or task runners.
-4. GitLab CI configuration.
+4. GitLab CI or GitHub Actions configuration, according to the detected provider.
 5. Explicit config commands.
 6. Ask when no safe command can be determined.
 
@@ -104,13 +112,13 @@ Do not include a body unless it adds useful rationale. Report commit hash and in
 - Do not push directly to the protected/default branch.
 - Report the remote branch actually updated.
 
-## Create the GitLab merge request
+## Create the provider change request
 
 Confirm that the central delivery review approved the complete branch diff, final test evidence, Definition-of-Done status, and planned merge-request content.
 
-Create only after configured final tests, unless the user explicitly accepts a draft MR with clearly marked unverified checks.
+Create only after configured final tests, unless the user explicitly accepts a draft request with clearly marked unverified checks.
 
-Resolve target branch from config and verify it exists. Use the repository template when present. Otherwise use:
+Resolve target branch from the active provider's config and verify it exists. Use the repository template when present. Otherwise use:
 
 ```markdown
 ## Summary
@@ -134,13 +142,13 @@ Resolve target branch from config and verify it exists. Use the repository templ
 <limitations, risk areas, migration notes, or "None">
 ```
 
-Write the merge-request title and description in English unless a repository rule explicitly requires otherwise. The title follows repository convention. When no convention exists, prefer:
+Write the pull/merge-request title and description in English unless a repository rule explicitly requires otherwise. The title follows repository convention. When no convention exists, prefer:
 
 ```text
 ABC-123 Add configurable import workflow
 ```
 
-Apply configured squash and source-branch settings. Capture and report MR URL, IID, title, source branch, target branch, draft state, and pipeline status when available.
+Apply configured squash and source-branch settings. For GitHub, apply pull-request and delete-source-branch settings; for GitLab, apply merge-request and remove-source-branch settings. Capture and report the request URL, provider identifier (PR number or MR IID), title, source branch, target branch, draft state, and CI status when available.
 
 ## Completion guard
 
@@ -150,5 +158,5 @@ Before reporting completion, verify:
 - All intended commits are pushed.
 - No local planning artifacts were committed.
 - Test claims match actual evidence.
-- Jira and MR links are recorded when Jira is enabled; otherwise Jira is explicitly marked not applicable.
+- Jira and pull/merge-request links are recorded when Jira is enabled; otherwise Jira is explicitly marked not applicable.
 - Known failures or missing capabilities are explicit.

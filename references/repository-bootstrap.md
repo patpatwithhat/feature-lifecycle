@@ -11,11 +11,11 @@ Produce an approved, runtime-independent repository configuration while asking o
 Locate the repository root and inspect, when available:
 
 - Relevant `AGENTS.md` files.
-- GitLab project metadata and default branch.
+- GitHub or GitLab project metadata and default branch.
 - Existing local and remote branch names.
 - Recent commit messages.
 - `CONTRIBUTING.md`, `README` files, merge-request templates, and release guidance.
-- `.gitlab-ci.yml` and repository build/test scripts.
+- `.gitlab-ci.yml`, GitHub Actions workflows, and repository build/test scripts.
 - Project manifests and solution/workspace files.
 - Current ChatGPT project context and Jira issue keys associated with the repository.
 
@@ -29,7 +29,7 @@ Present a compact result such as:
 Keine .feature-workflow.yaml gefunden.
 
 Sicher erkannt:
-- GitLab-Projekt: group/application
+- Hosting-Provider-Projekt: group/application
 - Default-Branch: develop
 - Branch-Muster: feature/{issue_key}-{slug}
 - Commit-Stil: Conventional Commits
@@ -62,12 +62,12 @@ Ask in small groups, covering only what remains unresolved:
    - Soll eine Story standardmäßig im Backlog bleiben oder dem aktiven Sprint zugeordnet werden?
    - Welche Status sollen nach dem Anlegen und nach erfolgreicher Abschlussprüfung gelten? Schlage `In Arbeit` und `Testen` vor, wenn keine Projektvorgabe erkennbar ist.
 2. **Git**
-   - GitLab default branch or a fixed base branch?
+   - Detected GitHub/GitLab default branch or a fixed base branch?
    - Confirm the detected feature-branch pattern.
    - Commit style and grouping strategy.
 3. **Tests**
    - Use discovered commands, supply explicit commands, or keep discovery-only behavior?
-4. **GitLab merge request**
+4. **GitHub pull request / GitLab merge request**
    - Target branch strategy, squash preference, and source-branch removal preference.
 5. **Local plans**
    - Explain that feature plans always remain local. Confirm `docs/plans` and local exclusion through Git's local exclude mechanism.

@@ -4,7 +4,7 @@ A Codex skill for taking software changes from an initial idea to tested,
 reviewed, and deliverable code.
 
 It supports structured feature planning, optional Jira integration, local Git
-work, automated tests, and GitLab merge requests.
+work, automated tests, and GitHub pull requests or GitLab merge requests.
 
 > This repository contains the skill itself. The workflow can be used inside
 > Codex for other software projects.
@@ -20,10 +20,10 @@ Feature Lifecycle helps you:
 - create safe feature branches
 - implement and test changes
 - review diffs before committing
-- push changes and create a GitLab merge request
+- push changes and create a GitHub pull request or GitLab merge request
 
-Jira is optional. GitLab is supported for software delivery, while this
-repository can be hosted publicly on GitHub.
+Jira is optional. The hosting provider is detected from the Git remote URL by
+default. GitHub and GitLab are supported for software delivery.
 
 ## Workflow at a glance
 
@@ -48,7 +48,7 @@ flowchart TD
     K --> L[Review diff and evidence]
     L --> M[Explicit approval]
     M --> N[Commit and push]
-    N --> O[GitLab merge request]
+    N --> O[GitHub pull request or GitLab merge request]
 ```
 
 ## Workflow modes
@@ -139,6 +139,11 @@ A minimal configuration can look like this:
 ```yaml
 schema_version: 1
 
+git:
+  provider: auto
+  base_branch:
+    strategy: provider_default
+
 workflow:
   mode_selection: always_ask
   jira_creation_after: program_design
@@ -162,6 +167,10 @@ jira:
 When Jira is disabled, the workflow skips Jira setup, issue creation, status
 transitions, and Jira linking.
 
+The default `git.provider: auto` detects GitHub or GitLab from the remote URL.
+Use `github` or `gitlab` explicitly for enterprise or self-hosted setups when
+automatic detection cannot identify the provider reliably.
+
 ## Language conventions
 
 By default:
@@ -169,7 +178,7 @@ By default:
 - Jira content is written in German
 - branches are named in English
 - commit messages are written in English
-- GitLab merge-request titles and descriptions are written in English
+- GitHub pull-request and GitLab merge-request titles and descriptions are written in English
 
 These conventions can be adjusted through the configuration.
 
@@ -190,7 +199,7 @@ Important reference files include:
 - `references/vibe-coding.md`
 - `references/delivery-only.md`
 - `references/config-schema.md`
-- `references/gitlab-delivery.md`
+- `references/gitlab-delivery.md` (GitHub and GitLab delivery)
 - `references/recovery-and-resume.md`
 
 ## Getting started

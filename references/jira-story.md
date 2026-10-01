@@ -53,7 +53,7 @@ Use this structure. Keep acceptance criteria observable and testable.
 - [ ] Vorgeschriebene Build-, Qualitäts- und CI-Prüfungen sind erfolgreich.
 - [ ] Dokumentation, Konfiguration und Migrationen wurden bei Bedarf aktualisiert.
 - [ ] Es befinden sich keine unbeabsichtigten Änderungen oder Geheimnisse im Diff.
-- [ ] Der GitLab Merge Request beschreibt Änderung, Tests und bekannte Einschränkungen.
+- [ ] Der GitHub Pull Request oder GitLab Merge Request beschreibt Änderung, Tests und bekannte Einschränkungen.
 ```
 
 Adapt the DoD to the feature; remove irrelevant generic items and add repository-specific requirements.
@@ -97,7 +97,7 @@ After the merge request exists, verify every acceptance criterion and Definition
 
 ## Link delivery
 
-After creating the GitLab merge request:
+After creating the GitHub pull request or GitLab merge request:
 
 - Add the MR URL to Jira through a link or comment when supported.
 - Include the Jira key and URL in the MR description.

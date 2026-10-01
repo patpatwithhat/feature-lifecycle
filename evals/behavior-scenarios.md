@@ -19,19 +19,34 @@ Run the affected scenarios after changing this skill. Use a fresh conversation o
 - Mandatory: [FL-01-I01][invariant] Leave the working mode unselected.
 - Mandatory: [FL-01-I02][invariant] Perform no repository or external-system mutation before approval.
 
+## 1b. Hosting provider detection
+
+**Prompt:** „Erkenne bitte den Hosting-Provider für dieses Repository und erkläre, welche Informationen du für die weitere Lieferung verwenden würdest.“
+
+**Setup:** Provide one repository with a single `origin` remote on `github.com`, one with a single `origin` remote on `gitlab.com`, and one with two remotes resolving to different providers. No writes are allowed.
+
+**Expected behavior:** Resolve GitHub or GitLab automatically from an unambiguous remote URL. Ask the user to choose when remotes resolve to different providers or when the host is unknown. An explicit `git.provider` override takes precedence over automatic detection.
+
+**Criteria:**
+
+- Mandatory: [FL-01B-S01][structured] Resolve a `github.com` remote as GitHub.
+- Mandatory: [FL-01B-S02][structured] Resolve a `gitlab.com` remote as GitLab.
+- Mandatory: [FL-01B-S03][structured] Ask for a provider choice when remotes are ambiguous.
+- Mandatory: [FL-01B-I01][invariant] Perform no external write during provider detection.
+
 ## 1a. Jira disabled during setup
 
-**Prompt:** „Richte den Feature-Lifecycle für dieses Repository ein, aber ohne Jira. Es soll kein Ticket angelegt werden; arbeite trotzdem mit Branch, Tests und GitLab weiter.“
+**Prompt:** „Richte den Feature-Lifecycle für dieses Repository ein, aber ohne Jira. Es soll kein Ticket angelegt werden; arbeite trotzdem mit Branch, Tests und GitHub weiter.“
 
-**Setup:** The setup answer sets `jira.enabled` to `false`; Git and GitLab capabilities are available.
+**Setup:** The setup answer sets `jira.enabled` to `false`; Git and GitHub capabilities are available.
 
-**Expected behavior:** Persist `jira.enabled: false`, skip all remaining Jira setup questions and capability discovery, create no Jira issue, and continue the non-Jira workflow. If the configured branch pattern contains `{issue_key}`, omit that placeholder and its separator from the generated branch name.
+**Expected behavior:** Persist `jira.enabled: false`, skip all remaining Jira setup questions and capability discovery, create no Jira issue, and continue the non-Jira workflow on GitHub. If the configured branch pattern contains `{issue_key}`, omit that placeholder and its separator from the generated branch name.
 
 **Criteria:**
 
 - Mandatory: [FL-01A-S01][structured] Store `jira.enabled: false` in the approved configuration.
 - Mandatory: [FL-01A-I01][invariant] Do not ask for a Jira project, assignee, sprint, status, or field mapping after Jira is disabled.
-- Mandatory: [FL-01A-I02][invariant] Do not perform Jira capability discovery, issue creation, transition, checklist update, or Jira/GitLab linking.
+- Mandatory: [FL-01A-I02][invariant] Do not perform Jira capability discovery, issue creation, transition, checklist update, or Jira/provider linking.
 - Mandatory: [FL-01A-I03][invariant] Continue with a valid branch name that contains no unresolved `{issue_key}` placeholder.
 
 ## 2. Local configuration and assignee
@@ -125,7 +140,7 @@ Run the affected scenarios after changing this skill. Use a fresh conversation o
 
 ## 7. Final delivery review
 
-**Prompt:** „Bereite die vollständige Lieferprüfung vor. Zeige mir den vollständigen Branch-Diff, die finale Testevidenz, den Definition-of-Done-Status und den geplanten Merge-Request-Inhalt, aber pushe nichts und erstelle keinen Merge Request.“
+**Prompt:** „Bereite die vollständige Lieferprüfung vor. Zeige mir den vollständigen Branch-Diff, die finale Testevidenz, den Definition-of-Done-Status und den geplanten Pull-/Merge-Request-Inhalt, aber pushe nichts und erstelle keinen Request.“
 
 **Setup:** All implementation commits and final tests are complete. Use the supplied branch diff, test evidence, Definition-of-Done status, and planned merge-request data.
 
@@ -142,9 +157,23 @@ Run the affected scenarios after changing this skill. Use a fresh conversation o
 - Mandatory: [FL-07-I01][invariant] Leave `pushed` false.
 - Mandatory: [FL-07-I02][invariant] Leave `merge_request.created` false.
 
+## 7a. GitHub pull-request delivery
+
+**Prompt:** „Bereite dieselbe Lieferprüfung für ein GitHub-Repository vor und zeige mir den geplanten Pull Request, aber pushe nichts und erstelle ihn nicht.“
+
+**Setup:** The repository has one `origin` remote on `github.com`, `git.provider` is `auto`, GitHub capabilities are available, and the final test evidence is supplied by the delivery-review fixture.
+
+**Expected behavior:** Detect GitHub, resolve the GitHub default or configured target branch, render a GitHub Pull Request rather than a GitLab Merge Request, and preserve the delivery approval gate.
+
+**Criteria:**
+
+- Mandatory: [FL-07A-S01][structured] Resolve the provider as GitHub from the remote URL.
+- Mandatory: [FL-07A-S02][structured] Present GitHub Pull Request title and description content.
+- Mandatory: [FL-07A-I01][invariant] Do not push or create the Pull Request before explicit delivery approval.
+
 ## 8. Definition of Done handoff
 
-**Prompt:** „Führe den Definition-of-Done-Handoff für den vorhandenen Merge Request anhand der nachgewiesenen Daten durch.“
+**Prompt:** „Führe den Definition-of-Done-Handoff für den vorhandenen Pull-/Merge-Request anhand der nachgewiesenen Daten durch.“
 
 **Setup:** A merge request exists. Use the supplied Jira mapping, proven and remaining Definition-of-Done items, and transition capability. Real Jira writes remain blocked.
 

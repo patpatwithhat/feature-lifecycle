@@ -76,7 +76,7 @@ Never put credentials, tokens, secret values, or sensitive customer data into st
 1. Identify the matching plan directory by slug, Jira key, branch, or explicit user selection.
 2. Read `00-status.md` and every existing document in that directory.
 3. Read current repository status, branch, recent commits, and configured base branch.
-4. Read the current Jira Story only when Jira is enabled and a link exists; read the GitLab merge request when a link exists and the connector is available.
+4. Read the current Jira Story only when Jira is enabled and a link exists; read the GitHub pull request or GitLab merge request when a link exists and the connector is available.
 5. Reconcile recorded state with actual state. Actual repository and connector state wins over stale status, but record the discrepancy.
 6. Summarize:
    - Last approved boundary.

@@ -1,11 +1,11 @@
 ---
 name: feature-lifecycle
-description: Orchestrate end-to-end software feature work with optional Jira Cloud, GitLab, and a repository checkout. Use for feature clarification, the four-gate Software Factory workflow, faster vibe-coding delivery, focused branch or commit tasks, tests, optional Jira Stories, GitLab merge requests, or repository setup through .feature-workflow.yaml. Guide the user through one main workflow without requiring named subskills, always respect relevant AGENTS.md files, and support delivery-only tasks without forcing full feature planning.
+description: Orchestrate end-to-end software feature work with optional Jira Cloud, GitHub, GitLab, and a repository checkout. Use for feature clarification, the four-gate Software Factory workflow, faster vibe-coding delivery, focused branch or commit tasks, tests, optional Jira Stories, GitHub pull requests, GitLab merge requests, or repository setup through .feature-workflow.yaml. Guide the user through one main workflow without requiring named subskills, always respect relevant AGENTS.md files, and support delivery-only tasks without forcing full feature planning.
 ---
 
 # Feature Lifecycle
 
-Guide software work from an idea to a Jira Story, implementation, tests, English Git commits, and a GitLab merge request. Operate as one orchestrator with three internal modes; never require the user to invoke internal modules by name or in sequence.
+Guide software work from an idea to a Jira Story, implementation, tests, English Git commits, and a GitHub pull request or GitLab merge request. Detect the hosting provider from Git remote URLs by default and ask only when remotes are ambiguous. Operate as one orchestrator with three internal modes; never require the user to invoke internal modules by name or in sequence.
 
 ## Non-negotiable behavior
 
@@ -16,23 +16,23 @@ Guide software work from an idea to a Jira Story, implementation, tests, English
 - If the user already named a mode, ask for a one-line confirmation instead of silently assuming it.
 - If the user has not named a mode, recommend one after a short initial clarification, state the concrete reasons in one or two sentences, and let the user choose or override the recommendation. Recommend Vibe Coding for clearly bounded, low-risk changes; recommend Software Factory for cross-cutting changes, material uncertainty, migrations, external contracts, or disputed behavior. Never select a mode automatically.
 - For an explicit configuration-only request, run the repository bootstrap directly; do not force a feature mode.
-- Jira is optional. When `jira.enabled` is `false`, skip Jira setup questions, capability discovery, Story drafting and creation, Jira transitions, Jira checklist updates, and Jira/GitLab linking. Continue the Git, test, commit, and GitLab workflow without an issue key.
+- Jira is optional. When `jira.enabled` is `false`, skip Jira setup questions, capability discovery, Story drafting and creation, Jira transitions, Jira checklist updates, and Jira/provider linking. Continue the Git, test, commit, and provider workflow without an issue key.
 - When resuming an existing local workflow, read its status and continue from the first incomplete step instead of asking for a new mode.
 - Read every relevant `AGENTS.md` before planning or changing files. Nested `AGENTS.md` files apply to their subtrees.
-- Use the user's conversational language for questions and summaries. Jira title, summary, description, acceptance criteria, and Definition of Done are German. Branch names, commit messages, GitLab merge-request titles, and GitLab merge-request descriptions are English unless a repository rule explicitly requires otherwise.
+- Use the user's conversational language for questions and summaries. Jira title, summary, description, acceptance criteria, and Definition of Done are German. Branch names, commit messages, and GitHub/GitLab change-request titles and descriptions are English unless a repository rule explicitly requires otherwise.
 - Do not write implementation code before the required planning approval for the selected mode.
 - Do not create Jira issues, branches, commits, pushes, or merge requests until the applicable approval and capability checks have passed. When Jira is disabled, no Jira capability check or issue creation is applicable.
 - Never force-push, hard-reset, discard changes, auto-stash, weaken tests, delete branches, expose secrets, or write directly to a protected/default branch without explicit authorization.
 - Never create a commit automatically. Before every implementation commit, show the actual Git diff and relevant test evidence, then wait for the user's explicit review approval.
 - At an approval boundary, present the concrete evidence in the response: affected files, concise change summary, complete available diff, and focused test command/result. Do not merely state that this evidence would be shown later.
 - For a Story quality gate, show the complete German draft itself before asking for approval: outcome-oriented title, summary, context, scope, observable acceptance criteria, and tailored Definition of Done. Listing the required fields without their draft content is insufficient.
-- Before pushing an implementation branch or creating its merge request, show the complete branch diff, final test evidence, Definition-of-Done status, and planned merge-request content. Wait for the user's explicit delivery approval before either external action.
+- Before pushing an implementation branch or creating its pull/merge request, show the complete branch diff, final test evidence, Definition-of-Done status, and planned request content. Wait for the user's explicit delivery approval before either external action.
 - Base commit messages on the actual diff, never only on a pre-implementation plan.
 - Keep feature-planning files local and prevent them from entering commits.
 
 ## Start or resume
 
-1. Identify the repository, current branch, working-tree state, available local execution tools, and connected Jira/GitLab capabilities.
+1. Identify the repository, current branch, working-tree state, available local execution tools, detected hosting provider, and connected Jira/GitHub/GitLab capabilities.
 2. Find and read relevant repository instructions, including `AGENTS.md`, `CONTRIBUTING.md`, merge-request templates, CI configuration, and documented build/test commands.
 3. At the repository root, read `.feature-workflow.yaml` and optional `.feature-workflow.local.yaml` when present.
 4. Look for a matching `docs/plans/<feature-slug>/00-status.md`.
@@ -49,7 +49,7 @@ Apply these sources in order while preserving higher-level safety and tool const
 2. Relevant `AGENTS.md` and other mandatory repository policies.
 3. `.feature-workflow.local.yaml`.
 4. `.feature-workflow.yaml`.
-5. Reliably observed repository and GitLab conventions.
+5. Reliably observed repository and hosting-provider conventions.
 6. Defaults in this skill.
 
 If the current request conflicts with `AGENTS.md` or a mandatory repository policy, stop and surface the conflict instead of choosing silently.
@@ -60,11 +60,11 @@ Before a mutating phase, verify the exact capabilities it needs:
 
 - Jira write access for Story creation or updates, when `jira.enabled` is `true`.
 - Jira Story field metadata and workflow transitions when `jira.enabled` is `true` and the project has no recorded capability mapping, so acceptance criteria, Definition of Done, sprint assignment, and configured statuses are not assumed.
-- GitLab write access for remote branches, pushes, or merge requests.
+- GitHub or GitLab write access for remote branches, pushes, or pull/merge requests, as applicable.
 - A local repository checkout and command execution for checkout, builds, tests, and local commits.
 - Permission to modify the current branch or create a new one.
 
-A connected GitLab app does not prove that a local checkout exists. Never claim that a branch is checked out or tests passed unless those actions were actually performed. If a required capability is missing, explain the blocked step and ask for one safe alternative, such as using a remote branch, creating a draft merge request with unverified tests, or continuing after a local checkout becomes available.
+A connected GitHub or GitLab app does not prove that a local checkout exists. Never claim that a branch is checked out or tests passed unless those actions were actually performed. If a required capability is missing, explain the blocked step and ask for one safe alternative, such as using a remote branch, creating a draft request with unverified tests, or continuing after a local checkout becomes available.
 
 ## Route to the selected mode
 
@@ -83,7 +83,7 @@ Read [delivery-only.md](references/delivery-only.md). Perform only the subset re
 ## Shared delivery modules
 
 - For Jira resolution, drafting, duplicate checks, creation, and updates, read [jira-story.md](references/jira-story.md) only when `jira.enabled` is `true`.
-- For base-branch discovery, safe branch creation, tests, commits, pushes, and GitLab merge requests, read [gitlab-delivery.md](references/gitlab-delivery.md).
+- For provider detection, base-branch discovery, safe branch creation, tests, commits, pushes, and GitHub/GitLab requests, read [gitlab-delivery.md](references/gitlab-delivery.md).
 - For config fields and allowed values, read [config-schema.md](references/config-schema.md) and use [config-template.yaml](references/config-template.yaml).
 - Before using or writing config, apply [config-validation.md](references/config-validation.md).
 
@@ -101,11 +101,11 @@ When changing this skill's workflow or configuration behavior, validate every af
 
 - At the first use of this skill in a repository, briefly tell inexperienced users that `.feature-workflow.yaml` contains team-wide defaults and `.feature-workflow.local.yaml` is an optional, local-only override for personal settings. Do not overwhelm them with every field unless they ask.
 - When a user asks how this skill works, how to configure it, whether a local YAML file exists, or which YAML values are allowed, read `README.md` and explain the relevant part in the user's language and level of experience.
-- Ask only for values that cannot be derived safely from repository, Jira, GitLab, or current conversation context.
+- Ask only for values that cannot be derived safely from repository, Jira, GitHub, GitLab, or current conversation context.
 - Group unresolved setup questions into small batches.
 - At each approval boundary, summarize the important decisions and the local document path instead of pasting every document in full.
 - During implementation, report concrete evidence early: changed areas, failing or passing tests, commit hashes, Jira key, branch, and merge-request link.
-- In isolated evaluations, use the supplied mock connector for read-only Jira or GitLab lookups when it is available. Treat the mock result as observed evidence and record the lookup and its result. Never turn a mock lookup into a real external action; real writes remain capability- and approval-gated.
+- In isolated evaluations, use the supplied mock connector for read-only Jira, GitHub, or GitLab lookups when it is available. Treat the mock result as observed evidence and record the lookup and its result. Never turn a mock lookup into a real external action; real writes remain capability- and approval-gated.
 - If the isolated fixture supplies a local mock-connector command, invoke that command directly instead of routing the lookup to a real external connector.
 - For mock-only evaluations, simulated writes such as sprint assignment may be performed through the supplied mock command and must be recorded as simulated; they must never be sent to the real service.
 - Preserve enough state in local plan files that a fresh session can continue without relying on chat history.
